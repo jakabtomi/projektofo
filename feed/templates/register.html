@@ -3,15 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bejelentkezés · Twitter Clone</title>
+    <title>Regisztráció · Twitter Clone</title>
     <link rel="stylesheet" href="/static/style.css">
 </head>
 <body class="auth-page">
     <div class="auth-shell">
         <div class="auth-card">
             <div class="auth-header">
-                <div class="auth-title">Üdv újra</div>
-                <div class="auth-subtitle">Jelentkezz be a folytatáshoz.</div>
+                <div class="auth-title">Fiók létrehozása</div>
+                <div class="auth-subtitle">Csatlakozz és kezdj el posztolni.</div>
             </div>
 
             {% if form.non_field_errors %}
@@ -31,19 +31,28 @@
 
                 <label class="field">
                     <span class="label">Jelszó</span>
-                    {{ form.password }}
-                    {% if form.password.errors %}
-                        <span class="error">{{ form.password.errors }}</span>
+                    {{ form.password1 }}
+                    {% if form.password1.errors %}
+                        <span class="error">{{ form.password1.errors }}</span>
                     {% endif %}
                 </label>
 
-                <button class="btn btn-primary" type="submit">Bejelentkezés</button>
+                <label class="field">
+                    <span class="label">Jelszó (újra)</span>
+                    {{ form.password2 }}
+                    {% if form.password2.errors %}
+                        <span class="error">{{ form.password2.errors }}</span>
+                    {% endif %}
+                </label>
+
+                <button class="btn btn-primary" type="submit">Regisztráció</button>
             </form>
 
             <div class="auth-footer">
-                Nincs még fiókod? <a class="link" href="/register/">Regisztráció</a>
+                Van már fiókod? <a class="link" href="/login/">Bejelentkezés</a>
             </div>
         </div>
     </div>
 </body>
 </html>
+

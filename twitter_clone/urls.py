@@ -22,5 +22,10 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.index),  # A főoldal
     path('login/', views.login),  # A főoldal
+    path('register/', views.register),
+    path('logout/', views.logout),
+    path('api/tweets/', views.list_tweets),
     path('api/tweets/create/', views.create_tweet),  # Ide küldi a JS a tweetet
+    path('api/tweets/<int:tweet_id>/share/', views.share_tweet),
+    path('api/tweets/<int:tweet_id>/comments/', views.comments),
 ]

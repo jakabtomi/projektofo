@@ -16,6 +16,13 @@
             <a href="#"><i data-lucide="bell"></i> <span>Értesítések</span></a>
             <a href="#"><i data-lucide="user"></i> <span>Profil</span></a>
             <button class="tweet-btn-large">Tweet</button>
+            <form class="logout-form" action="/logout/" method="post">
+                {% csrf_token %}
+                <button class="btn btn-ghost" type="submit">
+                    <i data-lucide="log-out" size="18"></i>
+                    <span>Kijelentkezés</span>
+                </button>
+            </form>
         </nav>
 
         <main class="feed">
@@ -48,6 +55,7 @@
         </aside>
     </div>
 
+    <script src="https://unpkg.com/lucide@latest"></script>
     <script src="/static/script.js"></script>
 </body>
 </html>
