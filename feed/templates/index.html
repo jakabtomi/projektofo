@@ -4,43 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Twitter Clone</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="/static/style.css">
 </head>
-<style> 
-* { margin: 0; padding: 0; box-sizing: border-box; font-family: sans-serif; }
-body { background-color: #000; color: #fff; display: flex; justify-content: center; }
 
-.container { display: flex; width: 100%; max-width: 1200px; min-height: 100vh; }
-
-.sidebar { width: 250px; padding: 20px; border-right: 1px solid #333; position: sticky; top: 0; height: 100vh; }
-.sidebar a { display: flex; align-items: center; gap: 15px; padding: 12px; color: white; text-decoration: none; font-size: 20px; border-radius: 30px; transition: 0.2s; }
-.sidebar a:hover { background: #181818; }
-.tweet-btn-large { background: #1d9bf0; border: none; color: white; width: 100%; padding: 15px; border-radius: 30px; font-weight: bold; font-size: 17px; margin-top: 20px; cursor: pointer; }
-
-.feed { flex: 1; max-width: 600px; border-right: 1px solid #333; }
-header { padding: 15px; border-bottom: 1px solid #333; backdrop-filter: blur(10px); position: sticky; top: 0; }
-
-.tweet-input-box { display: flex; padding: 15px; border-bottom: 1px solid #333; gap: 15px; }
-.avatar { width: 48px; height: 48px; background: #333; border-radius: 50%; flex-shrink: 0; }
-.input-area { flex: 1; }
-textarea { width: 100%; background: transparent; border: none; color: white; font-size: 20px; outline: none; resize: none; }
-.actions { display: flex; justify-content: space-between; align-items: center; margin-top: 10px; }
-.icons { color: #1d9bf0; display: flex; gap: 10px; }
-#post-btn { background: #1d9bf0; border: none; color: white; padding: 8px 16px; border-radius: 20px; font-weight: bold; cursor: pointer; }
-#post-btn:disabled { opacity: 0.5; }
-
-.tweet { padding: 15px; border-bottom: 1px solid #333; display: flex; gap: 15px; transition: 0.2s; }
-.tweet:hover { background: #080808; }
-.tweet-content { flex: 1; }
-.user-info { font-weight: bold; margin-bottom: 5px; }
-.user-info span { font-weight: normal; color: #71767b; margin-left: 5px; }
-.tweet-actions { display: flex; justify-content: space-between; margin-top: 12px; color: #71767b; max-width: 400px; }
-
-.widgets { padding: 20px; width: 350px; }
-.trending { background: #16181c; padding: 15px; border-radius: 15px; }
-.trend-item { margin-top: 15px; }
-
-</style>
 <body>
     <div class="container">
         <nav class="sidebar">
@@ -82,88 +48,6 @@ textarea { width: 100%; background: transparent; border: none; color: white; fon
         </aside>
     </div>
 
-    <script src="script.js"></script>
-<script> lucide.createIcons();
-
-const tweetInput = document.getElementById('tweet-text');
-const postBtn = document.getElementById('post-btn');
-const tweetList = document.getElementById('tweet-list');
-
-async function loadTweets() {
-    try {
-        const response = await fetch('/api/tweets/'); 
-        const tweets = await response.json();
-        
-        tweetList.innerHTML = '';
-        tweets.forEach(tweet => {
-            renderTweet(tweet.username, `@${tweet.username}`, tweet.content, tweet.created_at);
-        });
-    } catch (error) {
-        console.error("Hiba a tweetek betöltésekor:", error);
-    }
-}
-
-postBtn.addEventListener('click', async () => {
-    const content = tweetInput.value;
-    
-    try {
-        const response = await fetch('/api/tweets/create/', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRFToken': getCookie('csrftoken') 
-            },
-            body: JSON.stringify({ content: content })
-        });
-
-        if (response.ok) {
-            const newTweet = await response.json();
-            renderTweet(newTweet.username, `@${newTweet.username}`, newTweet.content, "most");
-            tweetInput.value = "";
-            postBtn.disabled = true;
-        }
-    } catch (error) {
-        console.error("Hiba a posztoláskor:", error);
-    }
-});
-
-function renderTweet(name, handle, content, time) {
-    const tweetHtml = `
-        <div class="tweet">
-            <div class="avatar"></div>
-            <div class="tweet-content">
-                <div class="user-info">${name} <span>${handle} · ${time}</span></div>
-                <div class="text">${content}</div>
-                <div class="tweet-actions">
-                    <i data-lucide="message-circle" size="18"></i>
-                    <i data-lucide="repeat" size="18"></i>
-                    <i data-lucide="heart" size="18"></i>
-                    <i data-lucide="share" size="18"></i>
-                </div>
-            </div>
-        </div>
-    `;
-    tweetList.insertAdjacentHTML('afterbegin', tweetHtml);
-    lucide.createIcons();
-}
-
-function getCookie(name) {
-    let cookieValue = null;
-    if (document.cookie && document.cookie !== '') {
-        const cookies = document.cookie.split(';');
-        for (let i = 0; i < cookies.length; i++) {
-            const cookie = cookies[i].trim();
-            if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                break;
-            }
-        }
-    }
-    return cookieValue;
-}
-
-tweetInput.addEventListener('input', () => postBtn.disabled = !tweetInput.value.trim());
-loadTweets();
- </script>
+    <script src="/static/script.js"></script>
 </body>
 </html>
